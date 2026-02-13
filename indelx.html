@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Qué pasó?</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(to bottom, #1632cf, #34495e);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    position: relative;
+}
+
+/* Mensaje */
+.mensaje {
+    position: relative;
+    z-index: 10;
+    color: rgba(148, 22, 22, 0.85);
+    font-size: 42px;
+    padding: 20px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.4);
+}
+
+/* Emojis cayendo */
+.emoji {
+    position: absolute;
+    top: -50px;
+    font-size: 26px;
+    animation: caer linear forwards;
+    pointer-events: none;
+}
+
+@keyframes caer {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0.8;
+    }
+}
+
+/* Ajustes para móvil */
+@media (max-width: 600px) {
+    .mensaje {
+        font-size: 28px;
+        padding: 15px;
+    }
+
+    .emoji {
+        font-size: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="mensaje">
+    ¿se murió o me abandonó?
+</div>
+
+<audio id="musica" loop>
+  <source src="gigi.mp4" type="audio/mpeg">
+</audio>
+
+<script>
+// Reproducción compatible con móviles
+function reproducirMusica() {
+    document.getElementById("musica").play();
+}
+
+document.addEventListener("touchstart", reproducirMusica, { once: true });
+document.addEventListener("click", reproducirMusica, { once: true });
+
+// Crear emojis aleatorios
+function crearEmoji() {
+    const emoji = document.createElement("div");
+    emoji.classList.add("emoji");
+
+    emoji.innerText = "🥀";
+
+    emoji.style.left = Math.random() * 100 + "vw";
+    emoji.style.animationDuration = (4 + Math.random() * 3) + "s";
+
+    document.body.appendChild(emoji);
+
+    setTimeout(() => {
+        emoji.remove();
+    }, 7000);
+}
+
+// Menos saturación para que se vea elegante
+setInterval(crearEmoji, 400);
+</script>
+
+</body>
+</html>
